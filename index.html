@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesan Untuk Kennn</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(135deg, #92b4ea 0%, #868787 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex; justify-content: center; align-items: center;
+      min-height: 100vh; padding: 20px; overflow-x: hidden; position: relative;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px);
+      padding: 35px 30px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      text-align: center; max-width: 450px; width: 100%; z-index: 10;
+      min-height: 250px; display: flex; flex-direction: column;
+      justify-content: space-between; align-items: center;
+    }
+    .slide { display: none; animation: fadeIn 0.6s ease-in-out; width: 100%; }
+    .slide.active { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 { color: #6182b5; margin-bottom: 15px; font-size: 24px; }
+    p { color: #444; line-height: 1.7; font-size: 16px; margin: 10px 0; }
+    .btn-next {
+      background-color: #92b4ea; color: white; border: none; padding: 12px 28px;
+      border-radius: 25px; font-size: 16px; font-weight: bold; cursor: pointer;
+      box-shadow: 0 4px 15px rgba(146, 180, 234, 0.4); transition: all 0.3s ease; margin-top: 20px;
+    }
+    .btn-next:hover { background-color: #7a9bc8; transform: translateY(-2px); }
+    audio { display: none; }
+    .heart {
+      position: absolute; color: rgba(255, 255, 255, 0.6); font-size: 20px;
+      animation: float 6s infinite linear; bottom: -10%; z-index: 1;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="slide active" id="slide-0">
+      <h2 style="color: #6182b5; margin-bottom: 15px;">Ada pesan khusus buat Kennn 📩</h2>
+      <p>Klik tombol di bawah buat mulai baca ya!</p>
+    </div>
+    <div class="slide" id="slide-1">
+      <h1>Hai Kennn! 👋🏻</h1>
+      <p>Ini adalah pesan khusus yang dibuat cuma untuk luu. Semoga harimu menyenangkan! 🥳</p>
+    </div>
+    <div class="slide" id="slide-2">
+      <h1>Semangat! ✨</h1>
+      <p>Semangat buat luu yang lagi mencari IPK tinggi!</p>
+    </div>
+    <div class="slide" id="slide-3">
+      <h1>Jangan Lupa Istirahat 🤯</h1>
+      <p>Tapi kalo luu udah capek, gak usah terlalu tekan diri sendiri ya!</p>
+    </div>
+    <div class="slide" id="slide-4">
+      <h1>Selalu Ada Buat Luu 🤗</h1>
+      <p>Gww bisa kok jadi temen curhat disaat lagi pusing.</p>
+    </div>
+    <div class="slide" id="slide-5">
+      <h1>Jangan Ragu Ya! 💬</h1>
+      <p>Jadi jangan ragu buat ngobrol sama gw ya!</p>
+    </div>
+    <div class="slide" id="slide-6">
+      <h1>Please 😊</h1>
+      <p>Gww selalu tungguin chat dari luu kokk, jadi jangan canggung ya sama gw!</p>
+    </div>
+
+    <button class="btn-next" id="nextBtn" onclick="nextSlide()">Mulai Buka ✨</button>
+
+    <!-- Menggunakan file lokal lagu.mp3 di GitHub -->
+    <audio id="bgMusic" loop preload="auto">
+  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg">
+</audio>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const totalSlides = 7;
+    const music = document.getElementById('bgMusic');
+    let musicStarted = false;
+
+    function nextSlide() {
+      if (!musicStarted) {
+        music.play().catch(e => console.log("Audio play blocked", e));
+        musicStarted = true;
+        setInterval(createHeart, 500);
+      }
+
+      document.getElementById(`slide-${currentSlide}`).classList.remove('active');
+      currentSlide++;
+
+      if (currentSlide < totalSlides) {
+        document.getElementById(`slide-${currentSlide}`).classList.add('active');
+        if (currentSlide === totalSlides - 1) {
+          document.getElementById('nextBtn').innerText = 'Selesai ❤️';
+        } else {
+          document.getElementById('nextBtn').innerText = 'Lanjut ➔';
+        }
+      } else {
+        alert('Semangat terus yaaa Kennn! ✨');
+        currentSlide = 1;
+        document.getElementById(`slide-${currentSlide}`).classList.add('active');
+        document.getElementById('nextBtn').innerText = 'Lanjut ➔';
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '💙';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+      heart.style.fontSize = Math.random() * 15 + 15 + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 6000);
+    }
+  </script>
+</body>
+</html>
